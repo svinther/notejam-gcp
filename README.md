@@ -1,5 +1,5 @@
 
-# Challenge: Deploy and operate a fictive customers "legacy" app at Google Cloud
+# Deploy and operate a fictive customers "legacy" app at Google Cloud
  
 The fictive customers application is a Python2 FLASK 0.9 web application, notejam. 
 
