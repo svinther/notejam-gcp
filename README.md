@@ -5,7 +5,7 @@ The fictive customers application is a Python2 FLASK 0.9 web application, noteja
 
 Repository is here https://github.com/svinther/notejam (dir: flask)
 
-It was forked from `komarserjio/notejam` and modified for cloud usage in the following ways:
+It was forked from `komarserjio/notejam` and modified for cloud usage.
 
 __Solution requirements:__ 
 
