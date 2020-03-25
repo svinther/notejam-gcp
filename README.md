@@ -220,7 +220,7 @@ It seems that it is not possible to satisfy the fictive customer backup and reco
 Cloud SQL. See the note here:
 https://cloud.google.com/sql/docs/postgres/backup-recovery/backups#default-backup-location
 
-Consider cross region readon replicas for disaster recovery https://cloud.google.com/sql/docs/postgres/replication/cross-region-replicas
+Consider cross region readonly replicas for disaster recovery https://cloud.google.com/sql/docs/postgres/replication/cross-region-replicas
 
 Also only 7 days of backups is retained, according to this
 https://cloud.google.com/sql/docs/postgres/backup-recovery/backups#what_backups_cost
