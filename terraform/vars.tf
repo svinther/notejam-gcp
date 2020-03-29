@@ -1,3 +1,9 @@
+terraform {
+  backend "gcs" {
+    prefix  = "terraform/state"
+  }
+}
+
 variable "githubowner" {}
 
 variable "githubrepo" {}
@@ -51,3 +57,4 @@ data "google_compute_network" "default" {
 
 data "google_project" "project" {
 }
+
