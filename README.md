@@ -127,6 +127,14 @@ https://console.cloud.google.com/cloud-build/triggers?project=$PROJECT_ID
     
     gcloud iam service-accounts keys create --iam-account=terraform@$PROJECT_ID.iam.gserviceaccount.com terraform-sa.json
     
+## Terraform backend
+
+Create a storage bucket for Terraform state
+
+    gsutil mb -l EU gs://$PROJECT_ID-tfstate
+    gsutil versioning set on gs://$PROJECT_ID-tfstate
+    gsutil iam ch serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com:roles/storage.objectAdmin gs://$PROJECT_ID-tfstate
+    
 ## Terraform config
 
     cd terraform
@@ -136,7 +144,7 @@ https://console.cloud.google.com/cloud-build/triggers?project=$PROJECT_ID
     
 Finally let Terraform do its thing    
     
-    terraform init
+    terraform init -backend-config="bucket=$PROJECT_ID-tfstate" -backend-config="credentials=../terraform-sa.json"
     terraform apply
     
 
