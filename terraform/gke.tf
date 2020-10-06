@@ -117,7 +117,7 @@ resource "google_container_node_pool" "gke_cluster-nodepool01" {
 //Explicitly configure kubernetes provider to the newly created cluster
 //This enables creation of Kubernetes artifacts from Terraform (e.g Secrets)
 provider kubernetes {
-  version = "1.11.1"
+  version = "1.13.2"
   //  https://github.com/terraform-providers/terraform-provider-kubernetes/releases
 
   load_config_file = false

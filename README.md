@@ -75,17 +75,13 @@ Before putting Terraform to work
 
 ## Enable cloud APIs
 
-    gcloud services enable compute.googleapis.com
-    gcloud services enable container.googleapis.com
-    gcloud services enable sqladmin.googleapis.com
-    gcloud services enable cloudbuild.googleapis.com
-    
-    #For managing service accounts
-    gcloud services enable iam.googleapis.com
-    gcloud services enable cloudresourcemanager.googleapis.com
-    
-    #For cloud sql Private IP setup
-    gcloud services enable servicenetworking.googleapis.com
+    gcloud services enable compute.googleapis.com \
+    container.googleapis.com \
+    sqladmin.googleapis.com \
+    cloudbuild.googleapis.com \
+    iam.googleapis.com \
+    cloudresourcemanager.googleapis.com \
+    servicenetworking.googleapis.com
     
 ## Initialize cloud CLI    
     
@@ -95,37 +91,13 @@ Let's try Switzerland ( cloud sql: yes - https://cloud.google.com/sql/docs/postg
     --metadata google-compute-default-region=europe-west6,google-compute-default-zone=europe-west6-a
     gcloud init
     
+    gcloud auth application-default login
+    
 
 ## Cloudbuild/Github linkage
 
 Manually use Console to connect to github from notejam gcp project, use this link
 https://console.cloud.google.com/cloud-build/triggers?project=$PROJECT_ID
-    
-## Terraform service account
-
-    gcloud iam service-accounts create terraform
-    
-    gcloud projects add-iam-policy-binding $PROJECT_ID \
-        --member serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com \
-        --role roles/compute.networkAdmin
-    
-    gcloud projects add-iam-policy-binding $PROJECT_ID \
-        --member serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com \
-        --role roles/container.admin
-    
-    gcloud projects add-iam-policy-binding $PROJECT_ID \
-        --member serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com \
-        --role roles/editor
-    
-    gcloud projects add-iam-policy-binding $PROJECT_ID \
-        --member serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com \
-        --role roles/resourcemanager.projectIamAdmin
-        
-    gcloud projects add-iam-policy-binding $PROJECT_ID \
-        --member serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com \
-        --role roles/container.clusterAdmin
-    
-    gcloud iam service-accounts keys create --iam-account=terraform@$PROJECT_ID.iam.gserviceaccount.com terraform-sa.json
     
 ## Terraform backend
 
@@ -133,7 +105,6 @@ Create a storage bucket for Terraform state
 
     gsutil mb -l EU gs://$PROJECT_ID-tfstate
     gsutil versioning set on gs://$PROJECT_ID-tfstate
-    gsutil iam ch serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com:roles/storage.objectAdmin gs://$PROJECT_ID-tfstate
     
 ## Terraform config
 
@@ -144,7 +115,7 @@ Create a storage bucket for Terraform state
     
 Finally let Terraform do its thing    
     
-    terraform init -backend-config="bucket=$PROJECT_ID-tfstate" -backend-config="credentials=../terraform-sa.json"
+    terraform init -backend-config="bucket=$PROJECT_ID-tfstate"
     terraform apply
     
 

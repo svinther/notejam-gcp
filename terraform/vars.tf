@@ -1,6 +1,13 @@
 terraform {
   backend "gcs" {
-    prefix  = "terraform/state"
+    prefix = "terraform/state"
+  }
+
+  required_providers {
+    hashicorp = {
+      source = "hashicorp/random"
+      version = "~> 2.3.0"
+    }
   }
 }
 
@@ -12,7 +19,7 @@ variable "gcp_region" {}
 
 variable "project_code" {}
 
-variable "gcp_credentials_file" {}
+//variable "gcp_credentials_file" {}
 
 variable "gcp_project" {}
 
@@ -28,24 +35,23 @@ variable "development_pipeline_stage" {
 }
 
 locals {
-  all_pipeline_stages = toset(concat([var.development_pipeline_stage], var.pipeline_stages))
+  all_pipeline_stages = toset(concat([
+    var.development_pipeline_stage], var.pipeline_stages))
 }
 
 provider "google" {
-  credentials = file(var.gcp_credentials_file)
   project = var.gcp_project
   region = var.gcp_region
   //https://github.com/terraform-providers/terraform-provider-google/blob/master/CHANGELOG.md
-  version = "3.13.0"
+  version = "3.41.0"
 }
 
 //beta is for cloud-build
 provider "google-beta" {
-  credentials = file(var.gcp_credentials_file)
   project = var.gcp_project
   region = var.gcp_region
   //https://github.com/terraform-providers/terraform-provider-google-beta/blob/master/CHANGELOG.md
-  version = "3.13.0"
+  version = "3.41.0"
 }
 
 
